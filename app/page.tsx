@@ -1,12 +1,13 @@
-import Image from 'next/image'
+import { getStreamers } from '@/api-data'
 
-import { CreateStreamerForm } from '@/components/forms'
-import { Button } from '@/components/ui'
+export default async function Home() {
+  const streamers = await getStreamers()
 
-export default function Home() {
   return (
-    <main className='flex min-h-screen flex-col items-center justify-between p-24'>
-      <CreateStreamerForm />
+    <main className='grid w-full gap-2 p-24'>
+      {streamers.map(({ id, name }: any) => (
+        <div key={id}>{name}</div>
+      ))}
     </main>
   )
 }
