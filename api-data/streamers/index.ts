@@ -3,33 +3,33 @@ import axios from 'axios'
 
 import { API } from '@/config/api'
 
-interface Stramers {
-  id: number
+type Platform = {
   name: string
-  nickname: string
-  upvotes: number
-  downvotes: number
-  platform: {
-    name: string
-  }
 }
 
-interface Streamer {
+interface StreamerCommon {
   id: number
   name: string
   nickname: string
+  platform: Platform
+}
+interface StramerList extends StreamerCommon {
+  upvotes: number
+  downvotes: number
+}
+
+export interface Streamer extends StreamerCommon {
   description: string
   image: string
-  platformId: number
 }
 
 export const fetchStreamers = () =>
-  axios.get<Stramers[]>(`${API.BASE_URL}/streamers`).then((response) => response.data)
+  axios.get<StramerList[]>(`${API.BASE_URL}/streamers`).then((response) => response.data)
 
 export const fetchStreamer = (id: string) =>
   axios.get<Streamer>(`${API.BASE_URL}/streamers/${id}`).then((response) => response.data)
 
-export const useQueryStreamers = (options?: UseQueryOptions<Stramers[]>) => {
+export const useQueryStreamers = (options?: UseQueryOptions<StramerList[]>) => {
   return useQuery({
     queryKey: ['streamers'],
     queryFn: fetchStreamers,
