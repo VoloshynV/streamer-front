@@ -1,31 +1,26 @@
-'use client'
+import { Streamer } from '@/api-data'
 
-import { useQueryStreamerById } from '@/api-data'
-
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card'
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card'
 interface StreamerCardProps {
-  id: string
-  initialData: any
+  initialData: Streamer
 }
 
-const StreamerCard = ({ id, initialData }: StreamerCardProps) => {
-  const { data } = useQueryStreamerById(id, {
-    initialData,
-  })
-
-  const { description, image, name, nickname, platformId } = data || {}
+const StreamerCard = ({ initialData }: StreamerCardProps) => {
+  const { description, image, name, nickname, platform } = initialData
 
   return (
     <Card className='mx-auto my-12 max-w-md'>
       <CardHeader className='items-center'>
-        <img src={image} className='md:w-xs mb-5 w-[70%] rounded-full border' alt='' />
+        <img src={image} className='md:w-xs mb-5 w-[70%] rounded-full border' alt={name} />
         <CardTitle>{name}</CardTitle>
         <CardDescription>{nickname}</CardDescription>
       </CardHeader>
       <CardContent>
         <p>{description}</p>
-        <p>{platformId}</p>
       </CardContent>
+      <CardFooter>
+        <p>Platform: {platform.name}</p>
+      </CardFooter>
     </Card>
   )
 }
