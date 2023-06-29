@@ -55,46 +55,48 @@ const CreateStreamerForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
-        <FormInput
-          control={form.control}
-          name={'name'}
-          label={'Username'}
-          placeholder={'Joe Doe'}
-          description={'This is streamer username'}
-        />
-        <FormInput
-          control={form.control}
-          name={'nickname'}
-          label={'Nickname'}
-          placeholder={'joedoe'}
-          description={'This is streamer nickname'}
-        />
-        <FormSelect
-          control={form.control}
-          name={'platform'}
-          label={'Platform'}
-          placeholder={'Select platform'}
-          description={'This is streamer platform'}
-          values={platforms}
-        />
-        <FormInput
-          control={form.control}
-          name={'image'}
-          label={'Image URL'}
-          placeholder={'https://picsum.photos/200/300'}
-          description={'This is streamer image'}
-        />
-        <FormTextarea
-          control={form.control}
-          name={'description'}
-          label={'Description'}
-          placeholder={'Small description about streamer'}
-          description={'Small description about streamer'}
-        />
+      <div className='flex justify-center'>
+        <form onSubmit={form.handleSubmit(onSubmit)} className='w-full max-w-lg space-y-8'>
+          <FormInput
+            control={form.control}
+            name={'name'}
+            label={'Username'}
+            placeholder={'Joe Doe'}
+            description={'This is streamer username'}
+          />
+          <FormInput
+            control={form.control}
+            name={'nickname'}
+            label={'Nickname'}
+            placeholder={'joedoe'}
+            description={'This is streamer nickname'}
+          />
+          <FormSelect
+            control={form.control}
+            name={'platform'}
+            label={'Platform'}
+            placeholder={'Select platform'}
+            description={'This is streamer platform'}
+            values={platforms}
+          />
+          <FormInput
+            control={form.control}
+            name={'image'}
+            label={'Image URL'}
+            placeholder={'https://picsum.photos/200/300'}
+            description={'This is streamer image'}
+          />
+          <FormTextarea
+            control={form.control}
+            name={'description'}
+            label={'Description'}
+            placeholder={'Small description about streamer'}
+            description={'Small description about streamer'}
+          />
 
-        <Button type='submit'>Submit</Button>
-      </form>
+          <Button type='submit'>Submit</Button>
+        </form>
+      </div>
     </Form>
   )
 }

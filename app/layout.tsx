@@ -20,7 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Providers>
           <div className='grid'>
             <Navigation />
-            {children}
+            <main className='grid w-full gap-2 px-5 pt-16'>{children}</main>
           </div>
         </Providers>
       </body>
