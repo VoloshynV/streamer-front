@@ -5,5 +5,5 @@ export default async function SteamerPage({ params }: { params: { id: string } }
   const { id } = params
   const streamerData = await fetchStreamer(id)
 
-  return <StreamerCard id={id} initialData={streamerData} />
+  return <StreamerCard initialData={streamerData} />
 }
