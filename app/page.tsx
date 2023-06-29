@@ -1,13 +1,12 @@
-import { getStreamers } from '@/api-data'
+import { fetchStreamers } from '@/api-data'
+import { StreamersList } from '@/components/streamers-list'
 
 export default async function Home() {
-  const streamers = await getStreamers()
+  const streamers = await fetchStreamers()
 
   return (
-    <main className='grid w-full gap-2 p-24'>
-      {streamers.map(({ id, name }: any) => (
-        <div key={id}>{name}</div>
-      ))}
+    <main className='w-full p-24'>
+      <StreamersList />
     </main>
   )
 }
