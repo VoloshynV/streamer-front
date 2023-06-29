@@ -1,20 +1,40 @@
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, UseQueryOptions } from '@tanstack/react-query'
 import axios from 'axios'
 
-export const getStreamers = async () => {
-  const res = await fetch('http://localhost:3000/streamers', {
-    cache: 'no-cache',
-  })
-  const streamers = await res.json()
+import { API } from '@/config/api'
 
-  return streamers
+interface Stramers {
+  id: number
+  name: string
+  nickname: string
+  upvotes: number
+  downvotes: number
+  platform: {
+    name: string
+  }
 }
 
-export const useQueryStreamers = (initialData?: any) => {
+interface Streamer {
+  id: number
+  name: string
+  nickname: string
+  description: string
+  image: string
+  platformId: number
+}
+
+export const fetchStreamers = () =>
+  axios.get<Stramers[]>(`${API.BASE_URL}/streamers`).then((response) => response.data)
+
+export const fetchStreamer = (id: string) =>
+  axios.get<Streamer>(`${API.BASE_URL}/streamers/${id}`).then((response) => response.data)
+
+export const useQueryStreamers = (options?: UseQueryOptions<Stramers[]>) => {
   return useQuery({
     queryKey: ['streamers'],
-    queryFn: getStreamers,
-    initialData,
+    queryFn: fetchStreamers,
+    ...options,
+    // refetchInterval: 1000,
   })
 }
 
@@ -22,7 +42,16 @@ export const useMutationStreamers = () => {
   return useMutation({
     mutationKey: ['streamers'],
     mutationFn: (data: any) => {
-      return axios.post('http://localhost:3000/streamers', data)
+      return axios.post(`${API.BASE_URL}/streamers`, data)
     },
+  })
+}
+
+export const useQueryStreamerById = (id: string, options?: UseQueryOptions<Streamer>) => {
+  return useQuery({
+    queryKey: ['streamer', id],
+    queryFn: () => fetchStreamer(id),
+    ...options,
+    // refetchInterval: 1000,
   })
 }
