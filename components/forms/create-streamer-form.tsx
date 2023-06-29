@@ -1,13 +1,12 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import React, { use, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 
 import { useMutationStreamers } from '@/api-data'
-import { Button, Form, FormInput, FormSelect, FormTextarea } from '@/components/ui'
-import { useToast } from '@/components/ui'
+import { Button, Form, FormInput, FormSelect, FormTextarea, useToast } from '@/components/ui'
 import { platforms } from '@/lib/const/platforms'
 
 const formSchema = z.object({
@@ -52,7 +51,7 @@ const CreateStreamerForm = () => {
         duration: 3000,
       })
     }
-  }, [isSuccess, isError, isLoading, failureReason])
+  }, [isSuccess, isError, isLoading, failureReason, toast, form])
 
   return (
     <Form {...form}>
