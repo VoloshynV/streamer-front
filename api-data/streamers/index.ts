@@ -1,8 +1,7 @@
 import { useMutation, useQuery, useQueryClient, UseQueryOptions } from '@tanstack/react-query'
-import axios from 'axios'
-import { useSession } from 'next-auth/react'
 
-import { API } from '@/config/api'
+import axios from '@/config/axios'
+import axiosAuth from '@/config/axiosAuth'
 
 type Platform = {
   name: string
@@ -25,17 +24,17 @@ export interface Streamer extends StreamerCommon {
 }
 
 export const fetchStreamers = () =>
-  axios.get<StreamerList[]>(`${API.BASE_URL}/streamers`).then((response) => response.data)
+  axios.get<StreamerList[]>('streamers').then((response) => response.data)
 
 export const fetchStreamer = (id: string) =>
-  axios.get<Streamer>(`${API.BASE_URL}/streamers/${id}`).then((response) => response.data)
+  axios.get<Streamer>(`streamers/${id}`).then((response) => response.data)
 
 export const useQueryStreamers = (options?: UseQueryOptions<StreamerList[]>) => {
   return useQuery({
     queryKey: ['streamers'],
     queryFn: fetchStreamers,
     ...options,
-    // refetchInterval: 1000,
+    refetchInterval: 5000,
   })
 }
 
@@ -44,7 +43,6 @@ export const useQueryStreamerById = (id: string, options?: UseQueryOptions<Strea
     queryKey: ['streamer', id],
     queryFn: () => fetchStreamer(id),
     ...options,
-    // refetchInterval: 1000,
   })
 }
 
@@ -52,24 +50,18 @@ export const useMutationStreamers = () => {
   return useMutation({
     mutationKey: ['streamers'],
     mutationFn: (data: any) => {
-      return axios.post(`${API.BASE_URL}/streamers`, data)
+      return axios.post(`streamers`, data)
     },
   })
 }
 
 export const useVoteStreamer = (id: string | number) => {
-  const session = useSession()
-  const token = session.data?.user.access_token
   const queryClient = useQueryClient()
 
   return useMutation({
     mutationKey: ['streamers'],
     mutationFn: (data: any) => {
-      return axios.put(`${API.BASE_URL}/streamers/${id}/vote`, data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      return axiosAuth.put(`streamers/${id}/vote`, data)
     },
     onSuccess: () => {
       queryClient.invalidateQueries(['streamers'])

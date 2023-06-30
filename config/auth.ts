@@ -37,7 +37,7 @@ export const authOptions: AuthOptions = {
     },
   },
   session: {
-    maxAge: 60 * 60 * 24 * 2, // 2 days
+    maxAge: 60 * 60 * 24 * 1, // 1 day
   },
   secret: process.env.NEXTAUTH_SECRET,
 }
