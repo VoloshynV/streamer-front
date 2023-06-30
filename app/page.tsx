@@ -4,5 +4,5 @@ import { StreamersList } from '@/components/streamers-list'
 export default async function Home() {
   const streamers = await fetchStreamers()
 
-  return <StreamersList />
+  return <StreamersList initialData={streamers} />
 }
