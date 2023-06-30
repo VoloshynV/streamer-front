@@ -1,6 +1,6 @@
 import { Streamer } from '@/api-data'
 
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card'
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../ui/card'
 interface StreamerCardProps {
   initialData: Streamer
 }
