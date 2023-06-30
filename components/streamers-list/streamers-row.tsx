@@ -1,5 +1,6 @@
 import { ThumbsDown, ThumbsUp } from 'lucide-react'
 import Link from 'next/link'
+import { useSession } from 'next-auth/react'
 
 import { StreamerList, useVoteStreamer } from '@/api-data'
 
@@ -8,6 +9,8 @@ import { TableCell, TableRow } from '../ui/table'
 
 const StreamerRow = ({ id, name, nickname, platform, downvotes, upvotes }: StreamerList) => {
   const { toast } = useToast()
+  const { status } = useSession()
+  const isSignedIn = status === 'authenticated'
   const { mutate } = useVoteStreamer(id)
 
   const handleVote = (vote: boolean) =>
@@ -34,16 +37,28 @@ const StreamerRow = ({ id, name, nickname, platform, downvotes, upvotes }: Strea
       </Link>
       <TableCell>{nickname}</TableCell>
       <TableCell>{platform.name}</TableCell>
-      <TableCell onClick={() => handleVote(true)} className='cursor-pointer'>
+      <TableCell>
         <div className='flex items-center justify-center gap-2'>
           {upvotes}
-          <ThumbsUp className='scale-0 transition group-hover:scale-100' />
+          {isSignedIn && (
+            <ThumbsUp
+              onClick={() => handleVote(true)}
+              size='20px'
+              className='scale-0 cursor-pointer transition group-hover:scale-100'
+            />
+          )}
         </div>
       </TableCell>
-      <TableCell onClick={() => handleVote(false)} className='cursor-pointer'>
+      <TableCell>
         <div className='flex items-center justify-center gap-2'>
           {downvotes}
-          <ThumbsDown className='scale-0 transition group-hover:scale-100' />
+          {isSignedIn && (
+            <ThumbsDown
+              onClick={() => handleVote(false)}
+              size='20px'
+              className='scale-0 cursor-pointer transition group-hover:scale-100'
+            />
+          )}
         </div>
       </TableCell>
     </TableRow>
