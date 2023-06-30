@@ -25,4 +25,4 @@ const StreamerCard = ({ initialData }: StreamerCardProps) => {
   )
 }
 
-export default StreamerCard
+export { StreamerCard }

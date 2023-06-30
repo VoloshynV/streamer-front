@@ -1,5 +1,5 @@
 import { fetchStreamer } from '@/api-data'
-import StreamerCard from '@/components/streamer-card'
+import { StreamerCard } from '@/components/streamer-card'
 
 export default async function SteamerPage({ params }: { params: { id: string } }) {
   const { id } = params
