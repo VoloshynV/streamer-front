@@ -43,7 +43,7 @@ const StreamerRow = ({ id, name, nickname, platform, downvotes, upvotes }: Strea
             <ThumbsUp
               onClick={() => handleVote(true)}
               size='20px'
-              className='scale-0 cursor-pointer transition group-hover:scale-100'
+              className='cursor-pointer transition group-hover:scale-100 lg:scale-0'
             />
           )}
         </div>
@@ -55,7 +55,7 @@ const StreamerRow = ({ id, name, nickname, platform, downvotes, upvotes }: Strea
             <ThumbsDown
               onClick={() => handleVote(false)}
               size='20px'
-              className='scale-0 cursor-pointer transition group-hover:scale-100'
+              className='cursor-pointer transition group-hover:scale-100 lg:scale-0'
             />
           )}
         </div>
