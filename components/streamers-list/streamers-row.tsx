@@ -2,12 +2,11 @@ import { ThumbsDown, ThumbsUp } from 'lucide-react'
 import Link from 'next/link'
 import { useSession } from 'next-auth/react'
 
-import { StreamerList, useVoteStreamer } from '@/api-data'
+import { StreamerListItem, useVoteStreamer } from '@/api-data'
 
-import { useToast } from '../ui'
-import { TableCell, TableRow } from '../ui/table'
+import { TableCell, TableRow, useToast } from '../ui'
 
-const StreamerRow = ({ id, name, nickname, platform, downvotes, upvotes }: StreamerList) => {
+const StreamerRow = ({ id, name, nickname, platform, downvotes, upvotes }: StreamerListItem) => {
   const { toast } = useToast()
   const { status } = useSession()
   const isSignedIn = status === 'authenticated'

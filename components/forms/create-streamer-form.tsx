@@ -1,37 +1,31 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import axios from 'axios'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import * as z from 'zod'
 
 import { useMutationStreamers } from '@/api-data'
 import { Button, Form, FormInput, FormSelect, FormTextarea, useToast } from '@/components/ui'
 import { platforms } from '@/lib/const/platforms'
-
-const formSchema = z.object({
-  name: z.string().min(2).max(50),
-  nickname: z.string().min(2).max(50),
-  image: z.string().min(2).max(100),
-  platform: z.string().min(1).max(10),
-  description: z.string().min(2).max(250),
-})
+import { createStreamerFormSchema, CreateStreamerFormType } from '@/lib/form-schema/create-streamer'
 
 const CreateStreamerForm = () => {
   const { mutate, isLoading, isSuccess, isError, failureReason } = useMutationStreamers()
   const { toast } = useToast()
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<CreateStreamerFormType>({
+    resolver: zodResolver(createStreamerFormSchema),
     defaultValues: {
       name: '',
       nickname: '',
       description: '',
       image: '',
+      platform: '',
     },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: CreateStreamerFormType) {
     mutate(values)
   }
 
@@ -42,11 +36,11 @@ const CreateStreamerForm = () => {
         title: 'Streamer created',
       })
     }
-    if (isError) {
+    if (isError && axios.isAxiosError(failureReason)) {
+      const errorDescription = failureReason.response?.data.message || failureReason.message
       toast({
         title: 'Error',
-        // @ts-ignore
-        description: failureReason.response.data.message,
+        description: errorDescription,
         variant: 'destructive',
         duration: 3000,
       })
