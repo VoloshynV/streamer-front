@@ -11,7 +11,11 @@ const StreamerCard = ({ initialData }: StreamerCardProps) => {
   return (
     <Card className='mx-auto my-12 max-w-md'>
       <CardHeader className='items-center'>
-        <img src={image} className='md:w-xs mb-5 w-[70%] rounded-full border' alt={name} />
+        <img
+          src={image}
+          className='md:w-xs mb-5 aspect-square w-[70%] rounded-full border'
+          alt={name}
+        />
         <CardTitle>{name}</CardTitle>
         <CardDescription>{nickname}</CardDescription>
       </CardHeader>
