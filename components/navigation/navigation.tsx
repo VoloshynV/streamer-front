@@ -16,20 +16,16 @@ const nav = [
     link: '/',
     name: 'Streamers',
   },
-  {
-    link: '/streamers/new',
-    name: 'Add Streamer',
-  },
 ]
 
 interface NavigationItemProps {
-  link: string
+  link?: string
   name: string
   className?: string
   onClick?: () => void
 }
 
-const NavigationItem = ({ link, name, className, onClick }: NavigationItemProps) => {
+const NavigationItem = ({ link = '', name, className, onClick }: NavigationItemProps) => {
   return (
     <NavigationMenuItem className={className} onClick={onClick}>
       <Link href={link} legacyBehavior passHref>
