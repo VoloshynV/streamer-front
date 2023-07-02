@@ -48,7 +48,7 @@ const Navigation = () => {
         {isSignedIn ? (
           <NavigationItem link='' name='LogOut' onClick={() => signOut()} />
         ) : (
-          <NavigationItem link='api/auth/signin' name='SignIn' />
+          <NavigationItem link='/api/auth/signin' name='SignIn' />
         )}
       </NavigationMenuList>
     </NavigationMenu>
