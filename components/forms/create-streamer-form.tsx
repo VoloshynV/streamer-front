@@ -55,7 +55,7 @@ const CreateStreamerForm = ({ onSubmit }: CreateStreamerFormProps) => {
   return (
     <Form {...form}>
       <div className='flex justify-center'>
-        <form onSubmit={form.handleSubmit(handleSubmit)} className='w-full max-w-lg space-y-8'>
+        <form onSubmit={form.handleSubmit(handleSubmit)} className='w-full max-w-lg space-y-4'>
           <FormInput
             control={form.control}
             name={'name'}
