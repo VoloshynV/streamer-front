@@ -1,5 +1,7 @@
 'use client'
 
+import { useState } from 'react'
+
 import { CreateStreamerForm } from '@/components/forms'
 import { Button } from '@/components/ui'
 import {
@@ -11,8 +13,10 @@ import {
 } from '@/components/ui/dialog'
 
 const AddNewStreamerModal = () => {
+  const [open, setOpen] = useState(false)
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button>Add new streamer</Button>
       </DialogTrigger>
@@ -20,7 +24,7 @@ const AddNewStreamerModal = () => {
         <DialogHeader>
           <DialogTitle>Adding a new streamer</DialogTitle>
         </DialogHeader>
-        <CreateStreamerForm />
+        <CreateStreamerForm onSubmit={() => setOpen(false)} />
       </DialogContent>
     </Dialog>
   )

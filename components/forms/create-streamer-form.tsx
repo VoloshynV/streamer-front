@@ -10,7 +10,11 @@ import { Button, Form, FormInput, FormSelect, FormTextarea, useToast } from '@/c
 import { platforms } from '@/lib/const/platforms'
 import { createStreamerFormSchema, CreateStreamerFormType } from '@/lib/form-schema/create-streamer'
 
-const CreateStreamerForm = () => {
+interface CreateStreamerFormProps {
+  onSubmit: () => void
+}
+
+const CreateStreamerForm = ({ onSubmit }: CreateStreamerFormProps) => {
   const { mutate, isLoading, isSuccess, isError, failureReason } = useMutationStreamers()
   const { toast } = useToast()
 
@@ -25,7 +29,7 @@ const CreateStreamerForm = () => {
     },
   })
 
-  function onSubmit(values: CreateStreamerFormType) {
+  function handleSubmit(values: CreateStreamerFormType) {
     mutate(values)
   }
 
@@ -35,6 +39,7 @@ const CreateStreamerForm = () => {
       toast({
         title: 'Streamer created',
       })
+      onSubmit()
     }
     if (isError && axios.isAxiosError(failureReason)) {
       const errorDescription = failureReason.response?.data.message || failureReason.message
@@ -45,12 +50,12 @@ const CreateStreamerForm = () => {
         duration: 3000,
       })
     }
-  }, [isSuccess, isError, isLoading, failureReason, toast, form])
+  }, [isSuccess, isError, isLoading, failureReason, toast, form, onSubmit])
 
   return (
     <Form {...form}>
       <div className='flex justify-center'>
-        <form onSubmit={form.handleSubmit(onSubmit)} className='w-full max-w-lg space-y-8'>
+        <form onSubmit={form.handleSubmit(handleSubmit)} className='w-full max-w-lg space-y-8'>
           <FormInput
             control={form.control}
             name={'name'}
