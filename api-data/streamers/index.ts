@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient, UseQueryOptions } from '@tanstac
 
 import axios from '@/config/axios'
 import axiosAuth from '@/config/axiosAuth'
+import { CreateStreamerFormType } from '@/lib/form-schema/create-streamer'
 
 type Platform = {
   name: string
@@ -13,7 +14,7 @@ interface StreamerCommon {
   nickname: string
   platform: Platform
 }
-export interface StreamerList extends StreamerCommon {
+export interface StreamerListItem extends StreamerCommon {
   upvotes: number
   downvotes: number
 }
@@ -24,12 +25,12 @@ export interface Streamer extends StreamerCommon {
 }
 
 export const fetchStreamers = () =>
-  axios.get<StreamerList[]>('streamers').then((response) => response.data)
+  axios.get<StreamerListItem[]>('streamers').then((response) => response.data)
 
 export const fetchStreamer = (id: string) =>
   axios.get<Streamer>(`streamers/${id}`).then((response) => response.data)
 
-export const useQueryStreamers = (options?: UseQueryOptions<StreamerList[]>) => {
+export const useQueryStreamers = (options?: UseQueryOptions<StreamerListItem[]>) => {
   return useQuery({
     queryKey: ['streamers'],
     queryFn: fetchStreamers,
@@ -38,19 +39,11 @@ export const useQueryStreamers = (options?: UseQueryOptions<StreamerList[]>) => 
   })
 }
 
-export const useQueryStreamerById = (id: string, options?: UseQueryOptions<Streamer>) => {
-  return useQuery({
-    queryKey: ['streamer', id],
-    queryFn: () => fetchStreamer(id),
-    ...options,
-  })
-}
-
 export const useMutationStreamers = () => {
   return useMutation({
     mutationKey: ['streamers'],
-    mutationFn: (data: any) => {
-      return axios.post(`streamers`, data)
+    mutationFn: (data: CreateStreamerFormType) => {
+      return axios.post<Streamer>(`streamers`, data)
     },
   })
 }
@@ -60,7 +53,7 @@ export const useVoteStreamer = (id: string | number) => {
 
   return useMutation({
     mutationKey: ['streamers'],
-    mutationFn: (data: any) => {
+    mutationFn: (data: { vote: boolean }) => {
       return axiosAuth.put(`streamers/${id}/vote`, data)
     },
     onSuccess: () => {

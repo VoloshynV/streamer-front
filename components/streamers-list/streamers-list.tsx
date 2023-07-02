@@ -1,12 +1,12 @@
 'use client'
 
-import { StreamerList, useQueryStreamers } from '@/api-data'
+import { StreamerListItem, useQueryStreamers } from '@/api-data'
 
 import { Table, TableBody, TableCaption, TableHead, TableHeader, TableRow } from '../ui/table'
 import { StreamerRow } from './streamers-row'
 
 interface StreamersListProps {
-  initialData?: StreamerList[]
+  initialData?: StreamerListItem[]
 }
 
 const StreamersList = ({ initialData }: StreamersListProps) => {
